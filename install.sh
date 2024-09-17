@@ -1,14 +1,16 @@
 #!/usr/bin/env sh
-set -e
+set -eu
 
 usage() {
-    echo "Usage: $0 CERTS_DIR"
+    echo "Usage: $0 CA_CERTS_DIR"
     exit 1
 }
 
 if [ "$#" -ne 1 ]; then
     usage
 fi
+
+CA_CERTS_DIR="${1}"
 
 # Distro logic taken from https://github.com/devcontainers/features/blob/main/src/common-utils/main.sh
 
@@ -70,6 +72,6 @@ case "${ADJUSTED_ID}" in
         ;;
 esac
 
-install_packages || (cert_bundle="$(mktemp)" && cat "${1}"/* >> "${cert_bundle}" && SSL_CERT_FILE="${cert_bundle}" install_packages && rm "${cert_bundle}")
-cp "${1}"/* "${custom_certs_dir}"
+install_packages || (cert_bundle="$(mktemp)" && cat "${CA_CERTS_DIR}"/* >> "${cert_bundle}" && SSL_CERT_FILE="${cert_bundle}" install_packages && rm "${cert_bundle}")
+cp "${CA_CERTS_DIR}"/* "${custom_certs_dir}"
 update_ca_certs
