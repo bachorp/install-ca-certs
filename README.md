@@ -16,13 +16,16 @@ FROM ${BASE}
 USER root
 
 RUN mkdir /tmp/install-ca-certs
-# TODO: COPY or ADD your certificates to /tmp/install-ca-certs/certs
-ADD --chmod=700 https://raw.githubusercontent.com/bachorp/install-ca-certs/main/install.sh /tmp/install/ca-certs/install.sh # TODO: Pin the version
+# TODO: COPY or ADD certificates to /tmp/install-ca-certs/certs
+# TODO: Pin install-ca-certs version
+ADD --chmod=700 https://raw.githubusercontent.com/bachorp/install-ca-certs/main/install.sh /tmp/install/ca-certs/install.sh
 RUN /tmp/install-ca-certs/install.sh /tmp/install-ca-certs/certs && rm -rf /tmp/install-ca-certs
 
-USER ${USER} # ok if empty string
+ARG USER
+# ok if empty string
+USER ${USER}
 ```
 
 ```sh
-docker build --build-arg BASE=<YOUR_BASE_IMAGE> --build-arg USER="$(docker inspect --format-string '{{.Config.User}}' <YOUR_BASE_IMAGE>)"
+docker build --build-arg BASE=<BASE_IMAGE> --build-arg USER="$(docker inspect --format-string '{{.Config.User}}' <BASE_IMAGE>)"
 ```
