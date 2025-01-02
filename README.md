@@ -1,5 +1,5 @@
 A single script that can install CA-certificates on multiple platforms.
-Works with Alpine, Debian-like, and RHEL-like distributions.
+Works with Alpine, Debian, RHEL-, and SUSE-like distributions.
 
 ## Usage
 
