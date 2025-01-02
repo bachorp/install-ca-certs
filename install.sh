@@ -32,6 +32,9 @@ else
         *"rhel"* | *"fedora"* | *"mariner"*)
             ADJUSTED_ID="rhel"
             ;;
+        *"suse"*)
+            ADJUSTED_ID="suse"
+            ;;
         *) ;;
     esac
 fi
@@ -66,6 +69,15 @@ case "${ADJUSTED_ID}" in
             apk add --update-cache --no-cache ca-certificates
         }
         custom_certs_dir=/usr/local/share/ca-certificates/
+        update_ca_certs() {
+            update-ca-certificates
+        }
+        ;;
+    "suse")
+        install_packages() {
+            true
+        }
+        custom_certs_dir=/etc/pki/trust/anchors/
         update_ca_certs() {
             update-ca-certificates
         }
