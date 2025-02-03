@@ -23,12 +23,12 @@ fi
 
 if [ "${ID}" = "alpine" ]; then
     ADJUSTED_ID="alpine"
-elif [ "${ID}" = "debian" ] || [ "${ID_LIKE}" = "debian" ]; then
+elif [ "${ID}" = "debian" ] || [ "${ID_LIKE-}" = "debian" ]; then
     ADJUSTED_ID="debian"
 elif [ "${ID}" = "rhel" ] || [ "${ID}" = "fedora" ] || [ "${ID}" = "mariner" ]; then
     ADJUSTED_ID="rhel"
 else
-    case "${ID_LIKE}" in
+    case "${ID_LIKE-}" in
         *"rhel"* | *"fedora"* | *"mariner"*)
             ADJUSTED_ID="rhel"
             ;;
